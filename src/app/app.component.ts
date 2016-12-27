@@ -19,10 +19,12 @@ export class MyApp {
       let token = localStorage.getItem('token');
       if (token) this.rootPage = TabsPage;
       else this.rootPage = LoginPage;
-    });
 
-    events.subscribe('logout', () => {
-      this.rootPage = LoginPage;
+      events.subscribe('logout', () => {
+        console.log('Logout...');
+        this.rootPage = LoginPage;
+      });
+    
     });
   }
 }

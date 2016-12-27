@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, Events } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, Events, App } from 'ionic-angular';
 
 import { MapPage } from '../map/map';
 import { LoginPage } from '../login/login';
@@ -19,7 +19,8 @@ export class MainPage {
     public navParams: NavParams,
     public userProvider: User,
     public loadingCtrl: LoadingController,
-    public events: Events
+    public events: Events,
+    public app: App
   ) {
 
   }
@@ -45,10 +46,9 @@ export class MainPage {
   }
 
   logout() {
-    // remove token
     localStorage.removeItem('token');
-    // this.navCtrl.setRoot(LoginPage);
-    this.events.publish('logout');
+    let nav = this.app.getRootNav(); 
+    nav.setRoot(LoginPage);
   }
 
 }
