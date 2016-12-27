@@ -10,6 +10,9 @@ import { ContactPage } from '../pages/contact/contact';
 import { MessagePage } from '../pages/message/message';
 import { SettingPage } from '../pages/setting/setting';
 //===================================================
+// provider
+import { User } from '../providers/user';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -35,6 +38,9 @@ import { SettingPage } from '../pages/setting/setting';
     MessagePage,
     SettingPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [
+    User,
+    { provide: ErrorHandler, useClass: IonicErrorHandler }
+  ]
 })
 export class AppModule {}
