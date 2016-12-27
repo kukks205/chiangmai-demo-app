@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Ionic Blank
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  Hello, {{ fullname }}
+  <ion-item>
+    <ion-label fixed>Your name</ion-label>
+    <ion-input type="text" [(ngModel)]="fullname"></ion-input>
+  </ion-item>
+
+  <ion-list>
+    <button (click)="showName(item)" ion-item *ngFor="let item of groups">
+      {{ item.id }} {{ item.name }}
+    </button>
+  </ion-list>
+
+</ion-content>

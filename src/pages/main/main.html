@@ -1,0 +1,16 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>Main</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <button ion-item *ngFor="let user of users" (click)="goDetail(user)">
+      <h2>{{ user.name }}</h2>
+      <p>{{ user.email }}</p>
+    </button>
+  </ion-list>
+</ion-content>
