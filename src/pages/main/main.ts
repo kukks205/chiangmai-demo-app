@@ -1,32 +1,41 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController, Events, App } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, App } from 'ionic-angular';
 
 import { MapPage } from '../map/map';
 import { LoginPage } from '../login/login';
 // provider
-import { User } from '../../providers/user';
+import { Customer } from '../../providers/customer';
+
+interface ICustomer {
+  id: number;
+  first_name?: string;
+  last_name?: string;
+  sex?: string;
+  image?: string;
+}
 
 @Component({
   selector: 'page-main',
-  templateUrl: 'main.html'
+  templateUrl: 'main.html',
+  providers: [Customer]
 })
 export class MainPage {
 
-  users: Array<{ name: string, email: string }> = [];
+  customers: Array<ICustomer> = [];
+  token: string;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public userProvider: User,
+    public customerProvider: Customer,
     public loadingCtrl: LoadingController,
-    public events: Events,
     public app: App
   ) {
-
+    this.token = localStorage.getItem('token');
   }
 
-  goDetail(_user) {
-    this.navCtrl.push(MapPage, { user: _user, users: this.users });
+  goDetail() {
+    this.navCtrl.push(MapPage, {  });
   } 
   
   ionViewWillEnter() {
@@ -35,11 +44,21 @@ export class MainPage {
       spinner: 'dots'
     });
     loader.present();
-
-    this.userProvider.getUsers()
+    this.customers = [];
+    this.customerProvider.getCustomers(this.token)
       .then((data: any) => {
         loader.dismiss();
-        this.users = data;
+        data.rows.forEach(v => {
+          let obj = {
+            id: v.id,
+            first_name: v.first_name,
+            last_name: v.last_name,
+            sex: v.sex,
+            email: v.email,
+            image: v.image ? 'data:image/jpeg;base64,' + v.image : null
+          };
+          this.customers.push(obj);
+        });
       }, error => {
         loader.dismiss();
       });

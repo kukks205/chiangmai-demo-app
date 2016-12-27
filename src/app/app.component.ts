@@ -20,10 +20,10 @@ export class MyApp {
       if (token) this.rootPage = TabsPage;
       else this.rootPage = LoginPage;
 
-      events.subscribe('logout', () => {
-        console.log('Logout...');
-        this.rootPage = LoginPage;
-      });
+      // events.subscribe('logout', () => {
+      //   console.log('Logout...');
+      //   this.rootPage = LoginPage;
+      // });
     
     });
   }
