@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, Events } from 'ionic-angular';
 
 import { MapPage } from '../map/map';
+import { LoginPage } from '../login/login';
 // provider
 import { User } from '../../providers/user';
 
@@ -17,7 +18,8 @@ export class MainPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public userProvider: User,
-    public loadingCtrl: LoadingController
+    public loadingCtrl: LoadingController,
+    public events: Events
   ) {
 
   }
@@ -40,6 +42,13 @@ export class MainPage {
       }, error => {
         loader.dismiss();
       });
+  }
+
+  logout() {
+    // remove token
+    localStorage.removeItem('token');
+    // this.navCtrl.setRoot(LoginPage);
+    this.events.publish('logout');
   }
 
 }
