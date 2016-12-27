@@ -10,6 +10,7 @@ import { ContactPage } from '../pages/contact/contact';
 import { MessagePage } from '../pages/message/message';
 import { SettingPage } from '../pages/setting/setting';
 import { LoginPage } from '../pages/login/login';
+import { AddCustomerPage } from '../pages/add-customer/add-customer';
 //===================================================
 // provider
 import { User } from '../providers/user';
@@ -24,7 +25,8 @@ import { User } from '../providers/user';
     ContactPage,
     MessagePage,
     SettingPage,
-    LoginPage
+    LoginPage,
+    AddCustomerPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -39,7 +41,8 @@ import { User } from '../providers/user';
     ContactPage,
     MessagePage,
     SettingPage,
-    LoginPage
+    LoginPage,
+    AddCustomerPage
   ],
   providers: [
     User,

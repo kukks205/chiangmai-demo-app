@@ -3,6 +3,8 @@ import { NavController, NavParams, LoadingController, App } from 'ionic-angular'
 
 import { MapPage } from '../map/map';
 import { LoginPage } from '../login/login';
+import { AddCustomerPage } from '../add-customer/add-customer';
+
 // provider
 import { Customer } from '../../providers/customer';
 
@@ -44,7 +46,7 @@ export class MainPage {
       spinner: 'dots'
     });
     loader.present();
-    
+
     this.customers = [];
     this.customerProvider.getCustomers(this.token)
       .then((data: any) => {
@@ -69,6 +71,10 @@ export class MainPage {
     localStorage.removeItem('token');
     let nav = this.app.getRootNav(); 
     nav.setRoot(LoginPage);
+  }
+
+  add() {
+    this.navCtrl.push(AddCustomerPage);
   }
 
 }
