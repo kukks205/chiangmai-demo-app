@@ -9,6 +9,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { ContactPage } from '../pages/contact/contact';
 import { MessagePage } from '../pages/message/message';
 import { SettingPage } from '../pages/setting/setting';
+import { LoginPage } from '../pages/login/login';
 //===================================================
 // provider
 import { User } from '../providers/user';
@@ -22,7 +23,8 @@ import { User } from '../providers/user';
     TabsPage,
     ContactPage,
     MessagePage,
-    SettingPage
+    SettingPage,
+    LoginPage
   ],
   imports: [
     IonicModule.forRoot(MyApp)
@@ -36,10 +38,12 @@ import { User } from '../providers/user';
     TabsPage,
     ContactPage,
     MessagePage,
-    SettingPage
+    SettingPage,
+    LoginPage
   ],
   providers: [
     User,
+    { provide: 'API_URL', useValue: 'http://localhost:3000' },
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })
