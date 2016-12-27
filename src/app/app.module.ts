@@ -43,7 +43,7 @@ import { User } from '../providers/user';
   ],
   providers: [
     User,
-    { provide: 'API_URL', useValue: 'http://localhost:3000' },
+    { provide: 'API_URL', useValue: 'http://10.0.3.241:3000' },
     { provide: ErrorHandler, useClass: IonicErrorHandler }
   ]
 })

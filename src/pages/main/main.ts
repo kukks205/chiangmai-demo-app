@@ -44,6 +44,7 @@ export class MainPage {
       spinner: 'dots'
     });
     loader.present();
+    
     this.customers = [];
     this.customerProvider.getCustomers(this.token)
       .then((data: any) => {
