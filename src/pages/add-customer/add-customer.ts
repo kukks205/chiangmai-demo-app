@@ -13,7 +13,13 @@ export class AddCustomerPage {
   sexes: Array<{ id: number, name: string }> = [];  
   groups: Array<{ id: number, name: string }> = [];
   token: string;
-  birthDate: any;
+  // birthDate: any;
+  sex: string;
+  email: string;
+  telephone: string;
+  firstName: string;
+  lastName: string;
+  customerTypeId: number;
 
   constructor(
     public navCtrl: NavController,
@@ -24,7 +30,7 @@ export class AddCustomerPage {
     this.sexes.push({ id: 2, name: 'หญิง' });
     this.token = localStorage.getItem('token');
 
-    this.birthDate = moment().format('YYYY-MM-DD');
+    // this.birthDate = moment().format('YYYY-MM-DD');
   }
 
   ionViewDidLoad() {
@@ -34,6 +40,28 @@ export class AddCustomerPage {
       }, (error) => {
       
       });
+  }
+
+  save() {
+    let customer = {
+      firstName: this.firstName,
+      lastName: this.lastName,
+      sex: this.sex,
+      email: this.email,
+      telephone: this.telephone,
+      customerTypeId: this.customerTypeId,
+      image: null
+    };
+
+    this.customerProvider.saveCustomer(this.token, customer)
+      .then((data: any) => {
+        if (data.ok) {
+          alert('Success');
+          }
+       }, (error) => {
+      
+      });
+
   }
 
 }

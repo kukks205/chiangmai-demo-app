@@ -42,5 +42,31 @@ export class Customer {
         });
     });
   }
+  
+  saveCustomer(token: string, customer: any) {
+    return new Promise((resolve, reject) => {
+      let headers = new Headers({
+        'Content-Type': 'application/json',
+        'x-access-token': token
+      });
+      let options = new RequestOptions({ headers: headers });
+      let body = {
+        firstName: customer.firstName,
+        lastName: customer.lastName,
+        sex: customer.sex,
+        customerTypeId: customer.customerTypeId,
+        telephone: customer.telephone,
+        email: customer.email,
+        image: customer.image
+      };
+      this.http.post(`${this.url}/customers`, body, options)
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data)
+        }, err => {
+          reject(err)
+        });
+    });
+  }
 
 }
