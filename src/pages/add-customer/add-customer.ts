@@ -100,7 +100,8 @@ export class AddCustomerPage {
   takePicture() {
     let options: CameraOptions = {
       destinationType: 0,
-      sourceType: 1
+      sourceType: 1,
+      allowEdit: true
     };
     Camera.getPicture(options).then((imageData) => {
       this.imageData = imageData;
@@ -113,7 +114,8 @@ export class AddCustomerPage {
   browsePicture() {
     let options: CameraOptions = {
       destinationType: 0,
-      sourceType: 0
+      sourceType: 0,
+      allowEdit: true
     };
     Camera.getPicture(options).then((imageData) => {
       this.imageData = imageData;

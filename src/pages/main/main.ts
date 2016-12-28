@@ -51,13 +51,12 @@ export class MainPage {
     this.navCtrl.push(MapPage, {  });
   } 
   
-  ionViewWillEnter() {
-    let loader = this.loadingCtrl.create({
+  getCustomers() {
+   let loader = this.loadingCtrl.create({
       content: 'Please wait...',
       spinner: 'dots'
     });
     loader.present();
-
     this.customers = [];
     this.customerProvider.getCustomers(this.token)
       .then((data: any) => {
@@ -76,6 +75,9 @@ export class MainPage {
       }, error => {
         loader.dismiss();
       });
+  }
+  ionViewWillEnter() {
+    this.getCustomers();
   }
 
   logout() {
@@ -105,7 +107,7 @@ export class MainPage {
             this.customerProvider.remove(this.token, customer.id)
               .then((data: any) => {
                 if (data.ok) {
-                  this.ionViewWillEnter();
+                  this.getCustomers();
                 }
               }, (error) => {
                 console.log(error);
@@ -158,5 +160,51 @@ export class MainPage {
     });
     actionSheet.present();
  }
+
+ search(event) {
+   let query = event.target.value;
+   if (query) {
+       this.customers = [];
+       this.customerProvider.search(this.token, query)
+         .then((data: any) => {
+           data.rows.forEach(v => {
+             let obj = {
+               id: v.id,
+               first_name: v.first_name,
+               last_name: v.last_name,
+               sex: v.sex,
+               email: v.email,
+               image: v.image ? 'data:image/jpeg;base64,' + v.image : null
+             };
+             this.customers.push(obj);
+           });
+         });
+   } else {
+     this.customers = [];
+     this.getCustomers();
+   }
+ 
+ }
+
+ doRefresh(refresher) {
+  this.customers = [];
+  this.customerProvider.getCustomers(this.token)
+    .then((data: any) => {
+      refresher.complete();
+      data.rows.forEach(v => {
+        let obj = {
+          id: v.id,
+          first_name: v.first_name,
+          last_name: v.last_name,
+          sex: v.sex,
+          email: v.email,
+          image: v.image ? 'data:image/jpeg;base64,' + v.image : null
+        };
+        this.customers.push(obj);
+      });
+    }, error => {
+      refresher.complete();
+    });
+ }  
   
 }

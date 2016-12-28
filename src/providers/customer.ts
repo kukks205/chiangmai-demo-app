@@ -25,6 +25,24 @@ export class Customer {
     });
   }
   
+  search(token: string, query: string) {
+    return new Promise((resolve, reject) => {
+      let headers = new Headers({
+        'Content-Type': 'application/json',
+        'x-access-token': token
+      });
+      let options = new RequestOptions({ headers: headers });
+      
+      this.http.get(`${this.url}/customers/search/${query}`, options)
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data)
+        }, err => {
+          reject(err)
+        });
+    });
+  }
+  
   getGroups(token: string) {
     return new Promise((resolve, reject) => {
       let headers = new Headers({
