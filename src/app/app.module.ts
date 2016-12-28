@@ -1,5 +1,8 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+// Google map
+import { AgmCoreModule } from 'angular2-google-maps/core';
+//
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { MainPage } from '../pages/main/main';
@@ -29,7 +32,10 @@ import { User } from '../providers/user';
     AddCustomerPage
   ],
   imports: [
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCRxTaQCiYVLQIpdkDxx3hj_buaZWXLzVo'
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
