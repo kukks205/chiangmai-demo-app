@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { Customer } from '../../providers/customer';
-import * as moment from 'moment';
+// import * as moment from 'moment';
 
 import { Camera, CameraOptions } from 'ionic-native';
 
