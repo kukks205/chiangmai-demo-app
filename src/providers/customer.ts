@@ -68,6 +68,33 @@ export class Customer {
         });
     });
   }
+  
+  updateCustomer(token: string, customer: any) {
+    return new Promise((resolve, reject) => {
+      let headers = new Headers({
+        'Content-Type': 'application/json',
+        'x-access-token': token
+      });
+      let options = new RequestOptions({ headers: headers });
+      let body = {
+        firstName: customer.firstName,
+        lastName: customer.lastName,
+        sex: customer.sex,
+        customerTypeId: customer.customerTypeId,
+        telephone: customer.telephone,
+        email: customer.email,
+        image: customer.image,
+        customerId: customer.customerId
+      };
+      this.http.put(`${this.url}/customers`, body, options)
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data)
+        }, err => {
+          reject(err)
+        });
+    });
+  }
 
   remove(token: string, customerId: number) {
     return new Promise((resolve, reject) => {
@@ -78,6 +105,24 @@ export class Customer {
       let options = new RequestOptions({ headers: headers });
 
       this.http.delete(`${this.url}/customers/${customerId}`, options)
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data)
+        }, err => {
+          reject(err)
+        });
+    });
+  }
+
+  detail(token: string, customerId: number) {
+    return new Promise((resolve, reject) => {
+      let headers = new Headers({
+        'Content-Type': 'application/json',
+        'x-access-token': token
+      });
+      let options = new RequestOptions({ headers: headers });
+
+      this.http.get(`${this.url}/customers/detail/${customerId}`, options)
         .map(res => res.json())
         .subscribe(data => {
           resolve(data)

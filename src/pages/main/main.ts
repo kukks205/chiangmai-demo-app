@@ -157,6 +157,6 @@ export class MainPage {
       ]
     });
     actionSheet.present();
-  }
-
+ }
+  
 }

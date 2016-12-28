@@ -25,6 +25,8 @@ export class AddCustomerPage {
   base64Image: string;
   imageData: string;
 
+  customerId: number;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -33,8 +35,27 @@ export class AddCustomerPage {
     this.sexes.push({ id: 1, name: 'ชาย' });
     this.sexes.push({ id: 2, name: 'หญิง' });
     this.token = localStorage.getItem('token');
-
+    this.customerId = this.navParams.get('id');
     // this.birthDate = moment().format('YYYY-MM-DD');
+  }
+
+  ionViewWillEnter() {
+    if (this.customerId) {
+      this.customerProvider.detail(this.token, this.customerId)
+        .then((data: any) => {
+          if (data.ok) {
+            this.firstName = data.customer.first_name;
+            this.lastName = data.customer.last_name;
+            this.sex = data.customer.sex;
+            this.customerTypeId = data.customer.customer_type_id;
+            this.imageData = data.customer.image;
+            this.base64Image = data.customer.image ?
+              'data:image/jpeg;base64,' + data.customer.image : null;
+            this.email = data.customer.email;
+            this.telephone = data.customer.telephone;
+          }
+        }, (error) => { });
+    }
   }
 
   ionViewDidLoad() {
@@ -54,17 +75,25 @@ export class AddCustomerPage {
       email: this.email,
       telephone: this.telephone,
       customerTypeId: this.customerTypeId,
-      image: this.imageData
+      image: this.imageData,
+      customerId: this.customerId
     };
 
-    this.customerProvider.saveCustomer(this.token, customer)
-      .then((data: any) => {
-        if (data.ok) {
-          this.navCtrl.pop();
-          }
-       }, (error) => {
+    let promise;
+
+    if (this.customerId) {
+      promise = this.customerProvider.updateCustomer(this.token, customer)
+    } else {
+      promise = this.customerProvider.saveCustomer(this.token, customer)
+    }
+
+    promise.then((data: any) => {
+      if (data.ok) {
+        this.navCtrl.pop();
+      }
+    }, (error) => {
       
-      });
+    });
 
   }
 

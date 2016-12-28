@@ -13,18 +13,13 @@ export class MyApp {
 
   constructor(platform: Platform, public events: Events) {
     platform.ready().then(() => {
-      StatusBar.backgroundColorByHexString('#cd201f');
+      StatusBar.backgroundColorByHexString('#7f8c8d');
       Splashscreen.hide();
 
       let token = localStorage.getItem('token');
       if (token) this.rootPage = TabsPage;
       else this.rootPage = LoginPage;
 
-      // events.subscribe('logout', () => {
-      //   console.log('Logout...');
-      //   this.rootPage = LoginPage;
-      // });
-    
     });
   }
 }
