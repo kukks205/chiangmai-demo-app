@@ -9,6 +9,8 @@ import {
   AlertController
 } from 'ionic-angular';
 
+import { CallNumber } from 'ionic-native';
+
 import { MapPage } from '../map/map';
 import { LoginPage } from '../login/login';
 import { AddCustomerPage } from '../add-customer/add-customer';
@@ -68,6 +70,7 @@ export class MainPage {
             last_name: v.last_name,
             sex: v.sex,
             email: v.email,
+            telephone: v.telephone,
             image: v.image ? 'data:image/jpeg;base64,' + v.image : null
           };
           this.customers.push(obj);
@@ -148,7 +151,12 @@ export class MainPage {
         {
           text: 'โทร',
           icon: !this.platform.is('ios') ? 'call': null,
-          handler: () => { }
+          handler: () => {
+            // console.log(customer);
+            CallNumber.callNumber(customer.telephone, true)
+              .then(() => console.log('Launched dialer!'))
+              .catch(() => console.log('Error launching dialer'));
+          }
         },
         {
           text: 'ยกเลิก',
@@ -174,6 +182,7 @@ export class MainPage {
                last_name: v.last_name,
                sex: v.sex,
                email: v.email,
+               telephone: v.telephone,
                image: v.image ? 'data:image/jpeg;base64,' + v.image : null
              };
              this.customers.push(obj);
@@ -198,6 +207,7 @@ export class MainPage {
           last_name: v.last_name,
           sex: v.sex,
           email: v.email,
+          telephone: v.telephone,
           image: v.image ? 'data:image/jpeg;base64,' + v.image : null
         };
         this.customers.push(obj);
