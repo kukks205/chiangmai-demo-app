@@ -125,4 +125,33 @@ export class ContactPage {
     this.navCtrl.push(AddContactPage, { contactId: contact.id });
   }
 
+  search(event) {
+    let query = event.target.value;
+
+    if (query) {
+      // search
+      this.contactProvider.search(this.db, query)
+        .then((rows: any) => {
+          if (rows.length) {
+            this.contacts = [];
+            for (let i = 0; i <= rows.length; i++) {
+              let contact = {
+                id: rows.item(i).id,
+                first_name: rows.item(i).first_name,
+                last_name: rows.item(i).last_name,
+                email: rows.item(i).email,
+                telephone: rows.item(i).telephone,
+                sex: rows.item(i).sex
+              };
+              this.contacts.push(contact)
+            }
+          }
+         }, (error) => {
+          
+        });
+    } else {
+      this.getContacts();
+    }
+  }
+
 }

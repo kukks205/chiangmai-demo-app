@@ -69,15 +69,23 @@ export class AddContactPage {
       last_name: this.lastName,
       sex: this.sex,
       email: this.email,
-      telephone: this.telephone
+      telephone: this.telephone,
+      id: this.contactId
     }
 
-    this.contactProvider.save(this.db, contact)
-      .then(() => {
-        this.navCtrl.pop();
-      }, (error) => {
-        console.log(error);
-      });
+    let promise: any;
+    
+    if (this.contactId) {
+      promise = this.contactProvider.update(this.db, contact);
+    } else {
+      promise = this.contactProvider.save(this.db, contact);
+    }
+    
+    promise.then(() => {
+      this.navCtrl.pop();
+    }, (error) => {
+      console.log(error);
+    });
   }
 
 }

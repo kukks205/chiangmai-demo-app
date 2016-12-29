@@ -31,10 +31,48 @@ export class Contact {
     });
   }  
 
+  update(db: SQLite, contact: any) {
+    let sql = `
+      UPDATE contact SET first_name=?, last_name=?, 
+      sex=?, email=?, telephone=? WHERE id=?
+    `;
+    return new Promise((resolve, reject) => {
+      db.executeSql(sql, [
+        contact.first_name,
+        contact.last_name,
+        contact.sex,
+        contact.email,
+        contact.telephone,
+        contact.id
+      ])
+        .then(() => {
+          resolve();
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }  
+
   getContacts(db: SQLite) {
     let sql = `SELECT * FROM contact`;
     return new Promise((resolve, reject) => {
       db.executeSql(sql, [])
+        .then((data: any) => {
+          resolve(data.rows);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }  
+
+  search(db: SQLite, query: string) {
+    let _query = `%${query}%`;
+
+    let sql = `SELECT * FROM contact WHERE first_name like ? OR last_name like ?`;
+    return new Promise((resolve, reject) => {
+      db.executeSql(sql, [_query])
         .then((data: any) => {
           resolve(data.rows);
         })
