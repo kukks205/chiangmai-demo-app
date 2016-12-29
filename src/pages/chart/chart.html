@@ -9,5 +9,15 @@
 
 
 <ion-content padding class="page-chart">
-  <chart [options]="options"></chart>
+  <ion-slides pager>
+    <ion-slide>
+      <chart style="display: block;" [options]="options"></chart>
+    </ion-slide>
+
+    <ion-slide>
+      <chart style="display: block;" [options]="options2"></chart>
+    </ion-slide>
+
+  </ion-slides>
+
 </ion-content>
