@@ -30,10 +30,15 @@ export class MyApp {
           CREATE TABLE IF NOT EXISTS contact2(id INTEGER PRIMARY KEY AUTOINCREMENT,
           first_name TEXT, last_name TEXT, sex TEXT, telephone TEXT, email TEXT)
         `;
+          let sqlInsert = `INSERT INTO contact2(first_name, last_name) VALUES(?, ?)`; 
+          
           db.sqlBatch([sqlCreateTable, sqlCreateTable2])
             // db.executeSql(sqlCreateTable, [])
             .then(() => {
               console.log('Create table success');
+              // insert data
+              db.executeSql(sqlInsert, ['Satit', 'Rianpit'])
+                .then(() => { });
             }, error => {
               console.log(error);
             });

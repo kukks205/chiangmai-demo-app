@@ -57,7 +57,7 @@ export class AddContactPage {
 
     this.contactProvider.save(this.db, contact)
       .then(() => {
-        alert('Success')
+        this.navCtrl.pop();
       }, (error) => {
         console.log(error);
       });

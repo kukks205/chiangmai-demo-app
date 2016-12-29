@@ -30,4 +30,30 @@ export class Contact {
         });
     });
   }  
+
+  getContacts(db: SQLite) {
+    let sql = `SELECT * FROM contact`;
+    return new Promise((resolve, reject) => {
+      db.executeSql(sql, [])
+        .then((data: any) => {
+          resolve(data.rows);
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }  
+
+  remove(db: SQLite, contactId: number) {
+    let sql = `DELETE FROM contact WHERE id=?`;
+    return new Promise((resolve, reject) => {
+      db.executeSql(sql, [contactId])
+        .then((data: any) => {
+          resolve();
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }  
 }
