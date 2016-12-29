@@ -2,6 +2,8 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 // Google map
 import { AgmCoreModule } from 'angular2-google-maps/core';
+// Highcharts
+import { ChartModule } from 'angular2-highcharts';
 //
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -15,6 +17,7 @@ import { SettingPage } from '../pages/setting/setting';
 import { LoginPage } from '../pages/login/login';
 import { AddCustomerPage } from '../pages/add-customer/add-customer';
 import { AddContactPage } from '../pages/add-contact/add-contact';
+import { ChartPage } from '../pages/chart/chart';
 //===================================================
 // provider
 import { User } from '../providers/user';
@@ -31,13 +34,15 @@ import { User } from '../providers/user';
     SettingPage,
     LoginPage,
     AddCustomerPage,
-    AddContactPage
+    AddContactPage,
+    ChartPage
   ],
   imports: [
     IonicModule.forRoot(MyApp),
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyCRxTaQCiYVLQIpdkDxx3hj_buaZWXLzVo'
-    })
+    }),
+    ChartModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -51,7 +56,8 @@ import { User } from '../providers/user';
     SettingPage,
     LoginPage,
     AddCustomerPage,
-    AddContactPage
+    AddContactPage,
+    ChartPage
   ],
   providers: [
     User,

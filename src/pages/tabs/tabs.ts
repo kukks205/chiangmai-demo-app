@@ -5,6 +5,7 @@ import { MainPage } from '../main/main';
 import { ContactPage } from '../contact/contact';
 import { MessagePage } from '../message/message';
 import { SettingPage } from '../setting/setting';
+import { ChartPage } from '../chart/chart';
 
 @Component({
   selector: 'page-tabs',
@@ -15,16 +16,14 @@ export class TabsPage {
   tabContact: any;
   tabMessage: any;
   tabSetting: any;
+  tabChart: any;
   
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.tabMain = MainPage;
     this.tabContact = ContactPage;
     this.tabMessage = MessagePage;
     this.tabSetting = SettingPage;
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad TabsPage');
+    this.tabChart = ChartPage;
   }
 
 }
