@@ -17,6 +17,7 @@ import { AddCustomerPage } from '../add-customer/add-customer';
 
 // provider
 import { Customer } from '../../providers/customer';
+import { Login } from '../../providers/login';
 
 interface ICustomer {
   id: number;
@@ -29,7 +30,7 @@ interface ICustomer {
 @Component({
   selector: 'page-main',
   templateUrl: 'main.html',
-  providers: [Customer]
+  providers: [Customer, Login]
 })
 export class MainPage {
 
@@ -40,6 +41,7 @@ export class MainPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public customerProvider: Customer,
+    public loginProvider: Login,
     public loadingCtrl: LoadingController,
     public app: App,
     public actionSheetCtrl: ActionSheetController,
@@ -63,7 +65,15 @@ export class MainPage {
     this.customerProvider.getCustomers(this.token)
       .then((data: any) => {
         loader.dismiss();
-        data.rows.forEach(v => {
+
+        let encryptedText = data.data;
+        let decrytedText = this.loginProvider.decrypt(encryptedText);
+        let _rows = JSON.parse(decrytedText);
+        
+        console.log(decrytedText);
+        console.log(_rows);
+
+        _rows.forEach(v => {
           let obj = {
             id: v.id,
             first_name: v.first_name,

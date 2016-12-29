@@ -14,7 +14,8 @@ export class ChartPage {
       chart: {type: 'bar'},
       title: { text: 'simple chart' },
       series: []
-    }; 
+    };
+    
     this.options.series.push({ name: 'Year 1800', data: [107, 31, 635, 203, 2] });
     this.options.series.push({ name: 'Year 2012', data: [1052, 954, 4250, 740, 38] });
     

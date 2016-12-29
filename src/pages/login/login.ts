@@ -26,10 +26,19 @@ export class LoginPage {
   ) { }
 
   doLogin() {
-    this.loginProvider.doLogin(this.username, this.password)
+    let data = { username: this.username, password: this.password };
+    let _data = JSON.stringify(data);
+    let encryptedText = this.loginProvider.encrypt(_data);
+
+    this.loginProvider.doLogin(encryptedText)
       .then((data: any) => {
         if (data.ok) {
-          let token = data.token;
+          let encryptedText = data.data;
+          let decryptedText = this.loginProvider.decrypt(encryptedText);
+          console.log(encryptedText);
+          console.log(decryptedText);
+          
+          let token = decryptedText;
           localStorage.setItem('token', token);
           // redirect to tab page
           this.navCtrl.setRoot(TabsPage);
