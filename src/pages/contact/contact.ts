@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, Platform, LoadingController, AlertController } from 'ionic-angular';
-import { SQLite } from 'ionic-native';
+import { SQLite, CallNumber } from 'ionic-native';
 
 import { AddContactPage } from '../add-contact/add-contact';
 import { Contact } from '../../providers/contact';
@@ -152,6 +152,12 @@ export class ContactPage {
     } else {
       this.getContacts();
     }
+  }
+
+  callPhone(telephone) {
+    CallNumber.callNumber(telephone, true)
+      .then(() => console.log('Launched dialer!'))
+      .catch(() => console.log('Error launching dialer'));
   }
 
 }
