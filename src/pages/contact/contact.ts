@@ -67,13 +67,27 @@ export class ContactPage {
   }
 
   ionViewWillEnter() {
-    
+    this.platform.ready().then(() => {
+      this.db.openDatabase({
+        name: 'contact2.db',
+        location: 'default'
+      })
+        .then(() => {
+          this.getContacts();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
   }
 
   remove(contact: any) {
     let confirm = this.alertCtrl.create({
       title: 'Are you sure?',
-      message: `คุณต้องการลบ [${contact.first_name} ${contact.last_name}] ใช่หรือไม่?`,
+      message: `
+      คุณต้องการลบ [${contact.first_name} ${contact.last_name}] 
+      ใช่หรือไม่?
+      `,
       buttons: [
         {
           text: 'ไม่ใช่, ยกเลิก',
@@ -87,6 +101,14 @@ export class ContactPage {
             this.contactProvider.remove(this.db, contact.id)
               .then(() => {
                 this.getContacts();
+              }, (error) => {
+                console.log(error);
+                let alert = this.alertCtrl.create({
+                  title: 'Error!',
+                  subTitle: 'เกิดข้อผิดพลาดในการรันคำสั่ง DELETE',
+                  buttons: ['OK']
+                });
+                alert.present();
               });
           }
         }
@@ -97,6 +119,10 @@ export class ContactPage {
 
   add() {
     this.navCtrl.push(AddContactPage);
+  }
+
+  edit(contact: any) {
+    this.navCtrl.push(AddContactPage, { contactId: contact.id });
   }
 
 }

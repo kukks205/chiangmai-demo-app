@@ -16,7 +16,7 @@ export class Contact {
     `;
     return new Promise((resolve, reject) => {
       db.executeSql(sql, [
-        contact.firs_name,
+        contact.first_name,
         contact.last_name,
         contact.sex,
         contact.email,
@@ -50,6 +50,19 @@ export class Contact {
       db.executeSql(sql, [contactId])
         .then((data: any) => {
           resolve();
+        })
+        .catch(error => {
+          reject(error);
+        });
+    });
+  }  
+
+  getDetail(db: SQLite, contactId: number) {
+    let sql = `SELECT * FROM contact WHERE id=?`;
+    return new Promise((resolve, reject) => {
+      db.executeSql(sql, [contactId])
+        .then((data: any) => {
+          resolve(data.rows);
         })
         .catch(error => {
           reject(error);

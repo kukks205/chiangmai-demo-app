@@ -19,19 +19,36 @@ export class AddContactPage {
   sexes: Array<{ id: number, name: string }> = [];
   db: SQLite;
 
+  contactId: number;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public contactProvider: Contact,
     public platform: Platform
   ) {
+    this.contactId = this.navParams.get('contactId');
+
     this.db = new SQLite();
     this.platform.ready().then(() => {
       this.db.openDatabase({
         name: 'contact2.db',
         location: 'default'
       })
-        .then(() => { })
+        .then(() => {
+          if (this.contactId) {
+            this.contactProvider.getDetail(this.db, this.contactId)
+              .then((rows: any) => {
+                this.firstName = rows.item(0).first_name;
+                this.lastName = rows.item(0).last_name;
+                this.email = rows.item(0).email;
+                this.telephone = rows.item(0).telephone;
+                this.sex = rows.item(0).sex;
+              }, (error) => {
+            
+              });
+          }
+         })
         .catch((error) => {
           console.log(error);
         });
